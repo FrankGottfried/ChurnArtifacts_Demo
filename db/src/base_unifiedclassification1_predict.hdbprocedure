@@ -1,0 +1,20 @@
+PROCEDURE base_unifiedclassification1_predict(in lt_in_0_unifiedclassification1_predict table ("AccountID" INT,"ServiceType" NVARCHAR(30),"ServiceName" NVARCHAR(30),"DataAllowance_MB" INT,"VoiceAllowance_Minutes" INT,"SMSAllowance_N_Messages" INT,"DataUsage_PCT" DOUBLE,"DataUsage_PCT_PM" DOUBLE,"DataUsage_PCT_PPM" DOUBLE,"VoiceUsage_PCT" DOUBLE,"VoiceUsage_PCT_PM" DOUBLE,"VoiceUsage_PCT_PPM" DOUBLE,"SMSUsage_PCT" DOUBLE,"SMSUsage_PCT_PM" DOUBLE,"SMSUsage_PCT_PPM" DOUBLE,"Revenue_Month" DOUBLE,"Revenue_Month_PM" DOUBLE,"Revenue_Month_PPM" DOUBLE,"Revenue_Month_PPPM" DOUBLE,"ServiceFailureRate_PCT" DOUBLE,"ServiceFailureRate_PCT_PM" DOUBLE,"ServiceFailureRate_PCT_PPM" DOUBLE,"CustomerLifetimeValue_USD" DOUBLE,"CustomerLifetimeValue_USD_PM" DOUBLE,"CustomerLifetimeValue_USD_PPM" DOUBLE,"Device_Lifetime" DOUBLE,"Device_Lifetime_PM" DOUBLE,"Device_Lifetime_PPM" DOUBLE,"ContractActivity" NVARCHAR(1)), in lt_model_in_1_unifiedclassification1_predict table ("ROW_INDEX" INT,"PART_INDEX" INT,), out lt_result_out_0_unifiedclassification1_predict table ("AccountID" INT,"SCORE" NVARCHAR(256),"CONFIDENCE" DOUBLE,))
+    LANGUAGE SQLSCRIPT
+    SQL SECURITY INVOKER
+    AS
+BEGIN
+DECLARE PAL_UNIFIED_CLASSIF_PREDICT_PH_TBL_0_3DD844DA_4619_11EC_8294_3AF9D33825E8" AS (SELECT * FROM :out_1);
+DECLARE param_name VARCHAR(5000) ARRAY;
+DECLARE int_value INTEGER ARRAY;
+DECLARE double_value DOUBLE ARRAY;
+DECLARE string_value VARCHAR(5000) ARRAY;
+in_1 = SELECT * FROM :lt_model_in_1_unifiedclassification1_predict;
+in_0 = SELECT * FROM :lt_in_0_unifiedclassification1_predict;
+param_name[1] := N'FUNCTION';
+int_value[1] := NULL;
+double_value[1] := NULL;
+string_value[1] := N'RDT';
+params = UNNEST(:param_name, :int_value, :double_value, :string_value);
+CALL "SYSAFL::PALUNIFIEDCLASSIFICATIONPREDICT"(:in_0, :in_1, :params, out_0, out_1);
+lt_result_out_0_unifiedclassification1_predict = SELECT * FROM :out_0;
+END

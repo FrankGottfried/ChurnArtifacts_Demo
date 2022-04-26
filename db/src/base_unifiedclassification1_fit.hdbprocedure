@@ -1,0 +1,61 @@
+PROCEDURE base_unifiedclassification1_fit(in lt_in_0_unifiedclassification1_fit table ("AccountID" INT,"ServiceType" NVARCHAR(30),"ServiceName" NVARCHAR(30),"DataAllowance_MB" INT,"VoiceAllowance_Minutes" INT,"SMSAllowance_N_Messages" INT,"DataUsage_PCT" DOUBLE,"DataUsage_PCT_PM" DOUBLE,"DataUsage_PCT_PPM" DOUBLE,"VoiceUsage_PCT" DOUBLE,"VoiceUsage_PCT_PM" DOUBLE,"VoiceUsage_PCT_PPM" DOUBLE,"SMSUsage_PCT" DOUBLE,"SMSUsage_PCT_PM" DOUBLE,"SMSUsage_PCT_PPM" DOUBLE,"Revenue_Month" DOUBLE,"Revenue_Month_PM" DOUBLE,"Revenue_Month_PPM" DOUBLE,"Revenue_Month_PPPM" DOUBLE,"ServiceFailureRate_PCT" DOUBLE,"ServiceFailureRate_PCT_PM" DOUBLE,"ServiceFailureRate_PCT_PPM" DOUBLE,"CustomerLifetimeValue_USD" DOUBLE,"CustomerLifetimeValue_USD_PM" DOUBLE,"CustomerLifetimeValue_USD_PPM" DOUBLE,"Device_Lifetime" DOUBLE,"Device_Lifetime_PM" DOUBLE,"Device_Lifetime_PPM" DOUBLE,"ContractActivity" NVARCHAR(1)), out lt_model_out_0_unifiedclassification1_fit table ("ROW_INDEX" INT,"PART_INDEX" INT,), out lt_out_1_unifiedclassification1_fit table ("VARIABLE_NAME" NVARCHAR(256),"IMPORTANCE" DOUBLE), out lt_stats_out_2_unifiedclassification1_fit table ("STAT_NAME" NVARCHAR(256),"STAT_VALUE" NVARCHAR(1000),"CLASS_NAME" NVARCHAR(256)), out lt_param_out_3_unifiedclassification1_fit table ("PARAM_NAME" NVARCHAR(256),"INT_VALUE" INT,"DOUBLE_VALUE" DOUBLE,"STRING_VALUE" NVARCHAR(1000)), out lt_out_4_unifiedclassification1_fit table ("ACTUAL_CLASS" NVARCHAR(1000),"PREDICTED_CLASS" NVARCHAR(1000),"COUNT" INT), out lt_metric_out_5_unifiedclassification1_fit table ("NAME" NVARCHAR(256),"X" DOUBLE,"Y" DOUBLE), out lt_out_6_unifiedclassification1_fit table ("AccountID" INT,"TYPE" INT))
+    LANGUAGE SQLSCRIPT
+    SQL SECURITY INVOKER
+    AS
+BEGIN
+DECLARE PAL_UNIFIED_CLASSIFICATION_PLACE_HOLDER2_0_3C987F9A_4619_11EC_8294_3AF9D33825E8" AS (SELECT * FROM :out_7);
+DECLARE param_name VARCHAR(5000) ARRAY;
+DECLARE int_value INTEGER ARRAY;
+DECLARE double_value DOUBLE ARRAY;
+DECLARE string_value VARCHAR(5000) ARRAY;
+in_0 = SELECT * FROM :lt_in_0_unifiedclassification1_fit;
+param_name[1] := N'FUNCTION';
+int_value[1] := NULL;
+double_value[1] := NULL;
+string_value[1] := N'RDT';
+param_name[2] := N'KEY';
+int_value[2] := 1;
+double_value[2] := NULL;
+string_value[2] := NULL;
+param_name[3] := N'SEED';
+int_value[3] := 2;
+double_value[3] := NULL;
+string_value[3] := NULL;
+param_name[4] := N'SPLIT_THRESHOLD';
+int_value[4] := NULL;
+double_value[4] := 1e-07;
+string_value[4] := NULL;
+param_name[5] := N'MIN_SAMPLES_LEAF';
+int_value[5] := 1;
+double_value[5] := NULL;
+string_value[5] := NULL;
+param_name[6] := N'N_ESTIMATORS';
+int_value[6] := 100;
+double_value[6] := NULL;
+string_value[6] := NULL;
+param_name[7] := N'MAX_FEATURES';
+int_value[7] := 5;
+double_value[7] := NULL;
+string_value[7] := NULL;
+param_name[8] := N'ALLOW_MISSING_LABEL';
+int_value[8] := 0;
+double_value[8] := NULL;
+string_value[8] := NULL;
+param_name[9] := N'MAX_DEPTH';
+int_value[9] := 20;
+double_value[9] := NULL;
+string_value[9] := NULL;
+param_name[10] := N'SAMPLE_FRACTION';
+int_value[10] := NULL;
+double_value[10] := 1.0;
+string_value[10] := NULL;
+params = UNNEST(:param_name, :int_value, :double_value, :string_value);
+CALL "SYSAFL::PALUNIFIEDCLASSIFICATION"(:in_0, :params, out_0, out_1, out_2, out_3, out_4, out_5, out_6, out_7);
+lt_model_out_0_unifiedclassification1_fit = SELECT * FROM :out_0;
+lt_out_1_unifiedclassification1_fit = SELECT * FROM :out_1;
+lt_stats_out_2_unifiedclassification1_fit = SELECT * FROM :out_2;
+lt_param_out_3_unifiedclassification1_fit = SELECT * FROM :out_3;
+lt_out_4_unifiedclassification1_fit = SELECT * FROM :out_4;
+lt_metric_out_5_unifiedclassification1_fit = SELECT * FROM :out_5;
+lt_out_6_unifiedclassification1_fit = SELECT * FROM :out_6;
+END
